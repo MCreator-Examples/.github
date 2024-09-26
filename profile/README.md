@@ -14,4 +14,7 @@ For open-source MCreator projects and examples, you can view the discussions pag
 If you have suggestions for future projects or tutorials share them on the [Feedback Repository!](https://github.com/MCreator-Examples/Feedback)
 
 ## 🌎 TALE OF BIOMES
-For MCreator Lore (Tale of Biomes) source code can be found on the [Tale of Biomes Repository!](https://github.com/MCreator-Examples/Tale-of-Biomes)
+For MCreator Lore (Tale of Biomes) source-code can be found on the [Tale of Biomes Repository!](https://github.com/MCreator-Examples/Tale-of-Biomes)
+
+## 🏷 MO TOOL TIERS
+This is a mod dependency that adds better support for the harvest level of blocks. This mod can be found on the [Mo Tool Tiers Repository!](https://github.com/MCreator-Examples/Mo-Tool-Tiers)
