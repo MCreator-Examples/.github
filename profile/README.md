@@ -17,4 +17,5 @@ If you have suggestions for future projects or tutorials share them on the [Feed
 For MCreator Lore (Tale of Biomes) source-code can be found on the [Tale of Biomes Repository!](https://github.com/MCreator-Examples/Tale-of-Biomes)
 
 ## 🏷 MO TOOL TIERS
-This is a mod dependency that adds better support for the harvest level of blocks. This mod can be found on the [Mo Tool Tiers Repository!](https://github.com/MCreator-Examples/Mo-Tool-Tiers)
+This is a mod dependency that adds better support for the harvest level of blocks.   
+This mod can be found on the [Mo Tool Tiers Repository!](https://github.com/MCreator-Examples/Mo-Tool-Tiers)
