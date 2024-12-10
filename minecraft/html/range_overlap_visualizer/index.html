@@ -27,18 +27,18 @@
     </style>
 </head>
 <body>
-    <h1>Range Overlap Visualizer</h1>
+    <h1>Biome Setting Range Overlap Visualizer</h1>
 
     <div class="range-container">
-        <label for="range1">Range 1 (Start - End): </label>
-        <input type="number" id="range1-start" placeholder="Start" step="0.01" min="-2" max="2" />
-        <input type="number" id="range1-end" placeholder="End" step="0.01" min="-2" max="2" />
+        <label for="range1">Biome Setting Range 1 (Min - Max): </label>
+        <input type="number" id="range1-start" placeholder="Min" step="0.0001" min="-2" max="2" />
+        <input type="number" id="range1-end" placeholder="Max" step="0.0001" min="-2" max="2" />
     </div>
 
     <div class="range-container">
-        <label for="range2">Range 2 (Start - End): </label>
-        <input type="number" id="range2-start" placeholder="Start" step="0.01" min="-2" max="2" />
-        <input type="number" id="range2-end" placeholder="End" step="0.01" min="-2" max="2" />
+        <label for="range2">Biome Setting Range 2 (Min - Max): </label>
+        <input type="number" id="range2-start" placeholder="Min" step="0.0001" min="-2" max="2" />
+        <input type="number" id="range2-end" placeholder="Max" step="0.0001" min="-2" max="2" />
     </div>
 
     <button onclick="visualizeOverlap()">Visualize Overlap</button>
@@ -108,5 +108,11 @@
             }
         }
     </script>
+	
+	<div style="position:relative;width:400px;background-color:#4caf50;position:absolute;height:20px;left:20px;padding:10px;">Biome 1</div>
+	<div style="position:relative;width:200px;background-color:rgba(255, 0, 0, 0.5);position:absolute;height:20px;left:220px;padding:10px;">Biome 1 Overlap</div>
+	<div style="position:relative;width:400px;background-color:#2196f3;position:absolute;height:20px;left:420px;padding:10px;">Biome 2</div>
+	<div style="position:relative;width:200px;background-color:rgba(255, 0, 0, 0.5);position:absolute;height:20px;left:620px;padding:10px;">Biome 2 Overlap</div>
+	<div style="position:relative;width:200px;background-color:#E0E0E0;position:absolute;height:20px;left:820px;padding:10px;">Unused Space</div>
 </body>
 </html>
