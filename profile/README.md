@@ -19,3 +19,8 @@ For MCreator Lore (Tale of Biomes) source-code can be found on the [Tale of Biom
 ## 🏷 MO TOOL TIERS
 This is a mod dependency that adds better support for the harvest level of blocks.   
 This mod can be found on the [Mo Tool Tiers Repository!](https://github.com/MCreator-Examples/Mo-Tool-Tiers)
+
+# TOOLS
+## 📊 BIOME SETTING RANGE OVERLAP VISUALIZER
+This tool can assist with the 1.18 biome generation in Minecraft which shows the overlapping settings when you compare two biome settings of the same type. For example comparing two biomes temperature values.
+- [HTML PAGE](https://html-preview.github.io/?url=https://github.com/MCreator-Examples/.github/blob/main/minecraft/html/biome_setting_range_overlap_visualizer/index.html)
