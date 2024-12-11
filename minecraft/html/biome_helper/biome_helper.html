@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biome Helper</title>
+    <style>
+		html {
+		background-color: #222326;
+		}
+		label, h1, h2, p {
+		  color: #ffffff;
+		}
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .range-container {
+            margin-bottom: 20px;
+        }
+        .bar {
+            position: relative;
+            height: 30px;
+            margin-bottom: 10px;
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+        }
+        .overlay {
+            position: absolute;
+            height: 100%;
+            background-color: rgba(255, 0, 0, 0.5);
+        }
+		.outline {
+			border-style: solid; 
+			border-width: 8px; 
+			border-color: #36383F;
+			border-radius: 25px;
+			padding-left: 25px;
+			padding-right: 25px;
+			padding-bottom: 25px;
+		}
+		.line {
+			border-bottom-style: solid; 
+			border-bottom-width: 8px; 
+			border-bottom-color: #36383F;
+			padding-bottom: 25px;
+		}
+		button {
+			padding: 10px;
+			width: 100%;
+			border-style: solid; 
+			border-width: 4px; 
+			border-color: #AAAAAA;
+			border-radius: 25px;
+		}
+		button:hover {
+			padding: 10px;
+			border-style: solid; 
+			border-width: 4px; 
+			border-color: rgb(0, 128, 0);
+			border-radius: 25px;
+		}
+		input {
+			padding: 8px;
+			width: 95%;
+			border-style: solid; 
+			border-width: 1px; 
+			border-color: rgba(0, 0, 0, 0);
+			border-radius: 25px;
+		}
+		.toc {
+			font-weight: bold;
+		}
+		td { 
+			padding: 10px;
+			color: #ffffff;
+		}
+		table {
+		width: 100%;
+		}
+		.settings {
+			width: 50%;
+		}
+		.footer {
+		margin-top: 90px;
+		}
+    </style>
+</head>
+<body>
+    <img src="biome_helper_logo.png" alt="Biome Helper Logo">	
+	<div class="outline">
+	<h1>Biome Settings</h1>
+	<p>Compare your settings between the two biomes here eg: Temperature from biome 1 and biome 2.</p>
+	<div class="settings">
+	<table>
+		<tr>
+			<td>
+				Setting
+			</td>
+			<td>
+				Min
+			</td>
+			<td>
+				Max
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Biome 1 Setting:
+			</td>
+			<td>
+				<input type="number" id="range1-start" placeholder="Min" step="0.0001" min="-2" max="2" />
+			</td>
+			<td>
+				<input type="number" id="range1-end" placeholder="Max" step="0.0001" min="-2" max="2" />
+			</td>
+		</tr>
+		<tr>
+			<td>
+				Biome 2 Setting:
+			</td>
+			<td>
+				<input type="number" id="range2-start" placeholder="Min" step="0.0001" min="-2" max="2" />
+			</td>
+			<td>
+				<input type="number" id="range2-end" placeholder="Max" step="0.0001" min="-2" max="2" />
+			</td>
+		</tr>
+	</table>
+
+    <button onclick="visualizeOverlap()">Visualize Overlap</button>
+	</div>
+	</div>
+
+	<h1>Settings Visualizer</h1>
+
+    <div style="margin-top: 20px;">
+        <div class="bar" id="range1-bar"></div>
+        <div class="bar" id="range2-bar"></div>
+    </div>
+
+    <script>
+        function visualizeOverlap() {
+            const r1Start = parseFloat(document.getElementById('range1-start').value);
+            const r1End = parseFloat(document.getElementById('range1-end').value);
+            const r2Start = parseFloat(document.getElementById('range2-start').value);
+            const r2End = parseFloat(document.getElementById('range2-end').value);
+
+            const barWidth = 500; // Visual width of the bar in pixels
+            const scale = barWidth / 4; // Scale factor for the ranges (-2 to 2)
+
+            const range1Bar = document.getElementById('range1-bar');
+            const range2Bar = document.getElementById('range2-bar');
+
+            // Clear existing overlay
+            range1Bar.innerHTML = '';
+            range2Bar.innerHTML = '';
+
+            // Draw Range 1
+            const r1BarStart = (r1Start + 2) * scale;
+            const r1BarWidth = (r1End - r1Start) * scale;
+            range1Bar.style.position = 'relative';
+            range1Bar.style.width = barWidth + 'px';
+            const r1Overlay = document.createElement('div');
+            r1Overlay.style.left = r1BarStart + 'px';
+            r1Overlay.style.width = r1BarWidth + 'px';
+            r1Overlay.style.backgroundColor = '#4caf50';
+            r1Overlay.style.position = 'absolute';
+            r1Overlay.style.height = '100%';
+            range1Bar.appendChild(r1Overlay);
+
+            // Draw Range 2
+            const r2BarStart = (r2Start + 2) * scale;
+            const r2BarWidth = (r2End - r2Start) * scale;
+            range2Bar.style.position = 'relative';
+            range2Bar.style.width = barWidth + 'px';
+            const r2Overlay = document.createElement('div');
+            r2Overlay.style.left = r2BarStart + 'px';
+            r2Overlay.style.width = r2BarWidth + 'px';
+            r2Overlay.style.backgroundColor = '#2196f3';
+            r2Overlay.style.position = 'absolute';
+            r2Overlay.style.height = '100%';
+            range2Bar.appendChild(r2Overlay);
+
+            // Calculate and display overlap
+            const overlapStart = Math.max(r1Start, r2Start);
+            const overlapEnd = Math.min(r1End, r2End);
+            if (overlapStart < overlapEnd) {
+                const overlapBarStart = (overlapStart + 2) * scale;
+                const overlapBarWidth = (overlapEnd - overlapStart) * scale;
+                const overlapOverlay = document.createElement('div');
+                overlapOverlay.style.left = overlapBarStart + 'px';
+                overlapOverlay.style.width = overlapBarWidth + 'px';
+                overlapOverlay.style.backgroundColor = 'rgba(255, 0, 0, 0.5)';
+                overlapOverlay.style.position = 'absolute';
+                overlapOverlay.style.height = '100%';
+                range1Bar.appendChild(overlapOverlay);
+                range2Bar.appendChild(overlapOverlay.cloneNode());
+            }
+        }
+    </script>
+	<div class="line"></div>
+	<h1>Table of Contents</h1>
+	
+	<div class="toc" style="position:relative;width:400px;background-color:#4caf50;position:absolute;height:20px;left:20px;padding:10px;">Biome 1</div>
+	<div class="toc" style="position:relative;width:200px;background-color:rgba(255, 0, 0, 0.5);position:absolute;height:20px;left:220px;padding:10px;">Biome 1 Overlap</div>
+	<div class="toc" style="position:relative;width:400px;background-color:#2196f3;position:absolute;height:20px;left:420px;padding:10px;">Biome 2</div>
+	<div class="toc" style="position:relative;width:200px;background-color:rgba(255, 0, 0, 0.5);position:absolute;height:20px;left:620px;padding:10px;">Biome 2 Overlap</div>
+	<div class="toc" style="position:relative;width:200px;background-color:#E0E0E0;position:absolute;height:20px;left:820px;padding:10px;">Unused Space</div>
+	<h2 class="footer">Developed by NorthWestTrees Gaming</h2>
+</body>
+</html>
