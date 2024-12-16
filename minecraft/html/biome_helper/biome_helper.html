@@ -253,42 +253,51 @@
 		}
 
 		function visualizeOverlap() {
-			const barsContainer = document.getElementById('bars-container');
-			barsContainer.innerHTML = '';
-			barsContainer.innerHTML = '<h2>Biome Visualizer</h2><p>This shows the coverage of each setting of each biome.</p>';    
-			const biomes = document.querySelectorAll('.settings');
-			const barWidth = 250;
-			const scale = barWidth / 4;
-
-			biomes.forEach((biome, index) => {
-				const biomeIndex = parseInt(biome.getAttribute('data-biome-index'), 10);
-				const settingBars = document.createElement('div');
-				settingBars.innerHTML = `<h3>Biome ${biomeIndex}</h3>`;
-				barsContainer.appendChild(settingBars);
-
-				settings.forEach(setting => {
-					const rangeStart = parseFloat(biome.querySelector(`.range-start[data-setting="${setting}"]`).value);
-					const rangeEnd = parseFloat(biome.querySelector(`.range-end[data-setting="${setting}"]`).value);
-
-					if (isNaN(rangeStart) || isNaN(rangeEnd)) return;
-
-					const bar = document.createElement('div');
-					bar.className = 'bar';
-					bar.style.width = `${barWidth}px`;
-					settingBars.appendChild(bar);
-
-					const overlay = document.createElement('div');
-					overlay.style.position = 'absolute';
-					overlay.style.left = `${(rangeStart + 2) * scale}px`;
-					overlay.style.width = `${(rangeEnd - rangeStart) * scale}px`;
-					overlay.style.backgroundColor = `rgba(${(index * 50) % 255}, ${(index * 100) % 255}, ${(index * 150) % 255}, 0.5)`;
-					overlay.style.height = '100%';
-					bar.appendChild(overlay);
-				});
-			});
-
-			// Call function to calculate probabilities for each biome
-			calculateBiomesProbabilities();
+		    const barsContainer = document.getElementById('bars-container');
+		    barsContainer.innerHTML = '';
+		    const biomes = document.querySelectorAll('.settings');
+		
+		    biomes.forEach((biome, index) => {
+		        const biomeIndex = parseInt(biome.getAttribute('data-biome-index'), 10);
+		        const settingBars = document.createElement('div');
+		        settingBars.innerHTML = `<h3>Biome ${biomeIndex}</h3>`;
+		        barsContainer.appendChild(settingBars);
+		
+		        settings.forEach(setting => {
+		            const rangeStart = parseFloat(biome.querySelector(`.range-start[data-setting="${setting}"]`).value);
+		            const rangeEnd = parseFloat(biome.querySelector(`.range-end[data-setting="${setting}"]`).value);
+		
+		            if (isNaN(rangeStart) || isNaN(rangeEnd)) return;
+		
+		            const barWrapper = document.createElement('div');
+		            barWrapper.className = 'bar-wrapper';
+		            barWrapper.style.position = 'relative';
+		            barWrapper.style.height = '20px';
+		            barWrapper.style.width = '100%';
+		            barWrapper.style.border = '1px solid #ccc';
+		            barWrapper.style.marginBottom = '10px';
+		            barWrapper.style.backgroundColor = '#f3f3f3';
+		            settingBars.appendChild(barWrapper);
+		
+		            const overlay = document.createElement('div');
+		            overlay.className = 'overlay';
+		            overlay.style.position = 'absolute';
+		            overlay.style.height = '100%';
+		            overlay.style.backgroundColor = `rgba(${(index * 50) % 255}, ${(index * 100) % 255}, ${(index * 150) % 255}, 0.5)`;
+		
+		            // Calculate percentage-based width and position
+		            const rangePercentStart = ((rangeStart + 2) / 4) * 100;
+		            const rangePercentWidth = ((rangeEnd - rangeStart) / 4) * 100;
+		
+		            overlay.style.left = `${rangePercentStart}%`;
+		            overlay.style.width = `${rangePercentWidth}%`;
+		
+		            barWrapper.appendChild(overlay);
+		        });
+		    });
+		
+		    // Call function to calculate probabilities for each biome
+		    calculateBiomesProbabilities();
 		}
 
 		function updateBiomeStyles(biomeIndex) {
