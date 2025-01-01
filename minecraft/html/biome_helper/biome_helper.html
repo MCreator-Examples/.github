@@ -5,157 +5,227 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biome Helper</title>
     <style>
-        /* Basic Reset */
-        html, body, div, h1, h2, h3, p, input, button, label {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+		/* Reset styles */
+		html, body, div, h1, h2, h3, p, input, button, label {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
 
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #141519;
-            color: #FFFFFF;
-            padding: 20px;
-            line-height: 1.6;
-        }
+		/* Body styles */
+		body {
+			font-family: 'Helvetica Neue', Arial, sans-serif;
+			background-color: #141519;
+			color: #FFFFFF;
+			padding: 20px;
+			line-height: 1.6;
+		}
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+		}
 
-        /* Settings and Group Boxes */
-        .settings, .group-box {
-            border: 5px solid #2C2D33;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
+		/* Group boxes */
+		.group-box {
+			border: 5px solid #00D1FF;
+			border-radius: 10px;
+			margin-bottom: 20px;
+			padding-left: 20px;
+			padding-right: 20px;
+			padding-bottom: 20px;
+		}
 
-        /* Inputs and Buttons */
-        input, button {
-            font-size: 1rem;
-        }
+		/* Headings */
+		h1, h3 {
+			margin-top: 10px;
+			color: #00D1FF;
+		}
+		h2 {
+			color: #00D1FF;
+			line-height: 1;
+		}
+		#bars-container div h3 {
+			margin: 0px;
+			padding: 0px;
+		}
+		
+		.info-text {
+			font-family: 'Courier New', monospace;
+			border: 1px solid #00D1FF;
+			border-radius: 25px;
+			padding: 0px 5px;
+		}
+		
+		.help-box {
+			display: none;
+			color: #202126;
+			position: absolute;
+			background: #f9f9f9;
+			border: 1px solid #ccc;
+			padding: 10px;
+			border-radius: 5px;
+			max-width: 300px;
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+			z-index: 1000;
+		}
+		
+		/* Labels */
+		label {
+			display: block;
+			margin-bottom: 5px;
+			color: #AAAAAA;
+		}
 
-        input {
-            padding: 10px;
-            width: 100%;
-            margin-bottom: 10px;
-            border: 2px solid #2C2D33;
-            border-radius: 4px;
-            background-color: #202126;
-            color: #FFFFFF;
-        }
+		/* Input fields */
+		input {
+			font-size: 1rem;
+			padding: 10px;
+			width: 100%;
+			margin-top: 10px;
+			border: 2px solid #2C2D33;
+			border-radius: 4px;
+			background-color: #202126;
+			color: #FFFFFF;
+		}
 
-        input:focus {
-            background-color: #2C2D33;
-            outline: none;
-            border-color: #74B259;
-        }
+		input:focus {
+			background-color: #2C2D33;
+			outline: none;
+			border-color: #74B259;
+		}
 
-        button {
-            padding: 12px;
-            width: 100%;
-            border: none;
-            border-radius: 4px;
-            color: white;
-            cursor: pointer;
-            margin-bottom: 15px;
-            transition: background-color 0.3s ease;
-        }
+		/* Buttons */
+		button {
+			font-size: 1rem;
+			padding: 12px;
+			width: 100%;
+			border: none;
+			border-radius: 4px;
+			color: white;
+			cursor: pointer;
+			margin-top: 10px;
+			transition: background-color 0.3s ease;
+		}
+		
+		.add-button {
+			background-color: #74B259;
+		}
 
-        .add-button {
-            background-color: #74B259;
-        }
+		.remove-button {
+			background-color: #AF5757;
+		}
 
-        .remove-button {
-            background-color: #AF5757;
-        }
+		.visualize-button, .export-button, .toggle-button {
+			background-color: #5690AD;
+		}
 
-        .visualize-button, .export-button {
-            background-color: #5690AD;
-        }
+		button:hover {
+			opacity: 0.8;
+		}
 
-        button:hover {
-            opacity: 0.9;
-        }
+		/* Settings container */
+		.settings {
+			border: 5px solid #2C2D33;
+			border-radius: 10px;
+			padding: 20px;
+			margin-bottom: 20px;
+			margin-top: 15px;
+		}
 
-        h1, h2, h3 {
-            margin-bottom: 15px;
-            color: #00D1FF;
-        }
+		/* Toggle button */
+		.toggle-button {
+			font-size: 1rem;
+			padding: 12px;
+			width: 100%;
+			border: none;
+			border-radius: 4px;
+			color: white;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #AAAAAA;
-        }
+		.settings-content {
+			display: block; /* Default state is visible */
+		}
 
-        /* Biome Bars */
-        .bar {
-            height: 30px;
-            background-color: #444;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid #555;
-        }
+		/* Bar styles */
+		.bar-wrapper {
+			background-color: #202126 !important;
+			border: 1px solid #2C2D33 !important;
+			border-radius: 5px !important;
+			height: 25px !important;
+		}
+		.bar-wrapper div {
+			border-radius: 5px !important;
+		}
+		.bar {
+			height: 30px;
+			background-color: #222222;
+			border-radius: 4px;
+			margin-bottom: 15px;
+			position: relative;
+			overflow: hidden;
+			border: 1px solid #555;
+		}
 
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            background-color: rgba(0, 123, 255, 0.5);
-            transition: width 0.3s ease;
-        }
+		.overlay {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			background-color: rgba(0, 123, 255, 0.5);
+			transition: width 0.3s ease;
+		}
 
-        /* Media Queries for Responsive Design */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
+		/* Media queries */
+		@media (max-width: 768px) {
+			body {
+				padding: 10px;
+			}
 
-            .settings, .group-box {
-                padding: 15px;
-            }
+			.settings, .group-box {
+				padding-top: 15px;
+			}
 
-            h1, h2, h3 {
-                font-size: 1.5rem;
-            }
+			h1, h2, h3 {
+				font-size: 1.5rem;
+			}
 
-            input, button {
-                font-size: 0.9rem;
-            }
+			input, button {
+				font-size: 0.9rem;
+			}
 
-            .bar {
-                height: 25px;
-            }
+			.bar {
+				height: 25px;
+			}
 
-            button {
-                padding: 10px;
-            }
-        }
+			button {
+				padding: 10px;
+			}
+		}
 
-        @media (max-width: 480px) {
-            h1, h2, h3 {
-                font-size: 1.2rem;
-            }
+		@media (max-width: 480px) {
+			h1, h2, h3 {
+				font-size: 1.2rem;
+			}
 
-            input, button {
-                font-size: 0.8rem;
-            }
+			input, button {
+				font-size: 0.8rem;
+			}
 
-            .settings, .group-box {
-                padding: 10px;
-            }
+			.settings, .group-box {
+				padding: 10px;
+			}
 
-            button {
-                padding: 8px;
-            }
-        }
+			button {
+				padding: 8px;
+			}
+		}
+		
+		.style {
+			background-color: rgb(50, 50, 50);
+		}
     </style>
 </head>
 <body>
@@ -165,183 +235,323 @@
 		<p>Compare your settings across multiple biomes.</p>
 		<div class="outline">
 			<div id="biome-settings">
-				<div class="settings" data-biome-index="1">
-					<h2>Biome 1</h2>
-					<div class="biome-name-group">
-						<label>Biome Name:</label>
-						<input type="text" class="biome-name" placeholder="Enter biome name" data-setting="name">
-					</div>
-					<div class="setting-group">
-						<label>Temperature</label>
-						<input type="number" class="range-start" placeholder="Min" step="0.0001" min="-2" max="2" data-setting="temperature">
-						<input type="number" class="range-end" placeholder="Max" step="0.0001" min="-2" max="2" data-setting="temperature">
-					</div>
-					<div class="setting-group">
-						<label>Humidity</label>
-						<input type="number" class="range-start" placeholder="Min" step="0.0001" min="-2" max="2" data-setting="humidity">
-						<input type="number" class="range-end" placeholder="Max" step="0.0001" min="-2" max="2" data-setting="humidity">
-					</div>
-					<div class="setting-group">
-						<label>Continentalness</label>
-						<input type="number" class="range-start" placeholder="Min" step="0.0001" min="-2" max="2" data-setting="continentalness">
-						<input type="number" class="range-end" placeholder="Max" step="0.0001" min="-2" max="2" data-setting="continentalness">
-					</div>
-					<div class="setting-group">
-						<label>Erosion</label>
-						<input type="number" class="range-start" placeholder="Min" step="0.0001" min="-2" max="2" data-setting="erosion">
-						<input type="number" class="range-end" placeholder="Max" step="0.0001" min="-2" max="2" data-setting="erosion">
-					</div>
-					<div class="setting-group">
-						<label>Weirdness</label>
-						<input type="number" class="range-start" placeholder="Min" step="0.0001" min="-2" max="2" data-setting="weirdness">
-						<input type="number" class="range-end" placeholder="Max" step="0.0001" min="-2" max="2" data-setting="weirdness">
-					</div>
-				</div>
+			<!-- Biomes will be added dynamically -->
 			</div>
+			<button class="add-button" onclick="addBiome()">Add Biome</button>
+			<button class="remove-button" onclick="removeLastBiome()">Remove Biome</button>
+			<button class="visualize-button" onclick="visualizeOverlap()">Visualize Overlap</button>
+			<button class="export-button" onclick="exportBiomesToJSON()">Export Biomes to JSON</button>
+			<input class="import-button" type="file" id="file-input" accept=".json">
 		</div>
-		<button class="add-button" onclick="addBiome()">Add Biome</button>
-		<button class="remove-button"onclick="removeLastBiome()">Remove Biome</button>
-		<button class="visualize-button" onclick="visualizeOverlap()">Visualize & Analyze</button>
 	</div>
-    <div class="group-box">
-		<h2>Save & Load Biome</h2>
-		<button class="export-button" onclick="exportBiomesToJSON()">Export Biomes</button>
-		<input style="width:32.5%;" type="file" id="file-input" accept=".json">
-    </div>
 	<div class="group-box">
-		<h1>Visualizer & Analyzer</h1>
-		<p>Data will be generated here once you have pressed the "Visualize & Analyze" button.</p>
+		<h1>Settings Visualizer</h1>
 		<div id="bars-container"></div>
 		<div id="probabilities-container"></div>
 	</div>
 
 
     <script>
-		let biomeIndex = 1;
-		const settings = ["temperature", "humidity", "continentalness", "erosion", "weirdness"];
+    // GLOBAL VARIABLES
+    let biomeIndex = 0; // Start with no biomes
+    const settings = ["temperature", "humidity", "continentalness", "erosion", "weirdness"];
 
-		function addBiome() {
-			biomeIndex++;
-			const biomeContainer = document.getElementById('biome-settings');
-			const newBiome = document.createElement('div');
-			newBiome.className = 'settings';
-			newBiome.setAttribute('data-biome-index', biomeIndex);
-			newBiome.innerHTML = `
-				<h2>Biome ${biomeIndex}</h2>
-				<div class="biome-name-group">
-					<label>Biome Name:</label>
-					<input type="text" class="biome-name" placeholder="Enter biome name" data-setting="name">
+	// ADDING AND REMOVING BIOMES
+	function addBiome() {
+		biomeIndex++;
+		const biomeContainer = document.getElementById('biome-settings');
+		const newBiome = document.createElement('div');
+		newBiome.className = 'settings';
+		newBiome.setAttribute('data-biome-index', biomeIndex);
+
+		// Define help text for each setting
+		const helpTexts = {
+			"Biome Name": `
+				<p>The Biome Name is mainly for biome reference so it's easier to find settings if you export them.</p>
+			`,
+			temperature: `
+				<p>Temperature is one parameter which controls the biome's location.</p><br/>
+				<p>Modded values are between -2.0 and 2.0, however, vanilla values only use -1.0 to 1.0.</p><br/>
+				<p>Lower are like snow biomes, higher values are like deserts.</p><br/>
+				<p>The vanilla values are listed below:
+					<ul>
+						<li>Cold Biomes</li>
+						<li>-1.0 to -0.45</li>
+						<li>-0.45 to -0.15</li>
+						<li>-0.15 to 0.2</li>
+						<li>0.2 to 0.55</li>
+						<li>0.55 to 1.0</li>
+						<li>Hot Biomes</li>
+					</ul>
+				</p>
+			`,
+			humidity: `
+				<p>Humidity is the second parameter which controls the biome's location based on vegetation.</p><br/>
+				<p>Modded values are between -2.0 and 2.0, however, vanilla values only use -1.0 to 1.0.</p><br/>
+				<p>Lower values have less foliage like deserts, higher values have lots of foliage like jungles.</p><br/>
+				<p>The vanilla values are listed below:
+					<ul>
+						<li>Barren Biomes</li>
+						<li>-1.0 to -0.35</li>
+						<li>-0.35 to -0.1</li>
+						<li>-0.1 to 0.1</li>
+						<li>0.1 to 0.3</li>
+						<li>0.3 to 1.0</li>
+						<li>Lush Biomes</li>
+					</ul>
+				</p>
+			`,
+			continentalness: `
+				<p>Continentalness is the third parameter which controls the biome's location based on how far inland or out at sea they are located.</p><br/>
+				<p>Modded values are between -2.0 and 2.0, however, vanilla values only use -1.2 to 1.0.</p><br/>
+				<p>Lower values are out at sea, higher values are far inland.</p><br/>
+				<p>The vanilla values are listed below:
+					<ul>
+						<li>Far Oceans</li>
+						<li>Mushroom fields: -1.2 to -1.05</li>
+						<li>Deep oceans: -1.05 to -0.455</li>
+						<li>Normal ocean: -0.455 to -0.19</li>
+						<li>Coast: -0.19 to -0.11</li>
+						<li>Near-inland: -0.11 to 0.03</li>
+						<li>Mid-inland: 0.03 to 0.3</li>
+						<li>Far-inland: 0.3 to 1.0</li>
+						<li>Far Inland</li>
+					</ul>
+				</p>
+			`,
+			erosion: `
+				<p>Erosion is the fourth parameter which controls the biome's location based on how flat or uneven the terrain is.</p><br/>
+				<p>Modded values are between -2.0 and 2.0, however, vanilla values only use -1.2 to 1.0.</p><br/>
+				<p>Lower values are not flat, higher values are flat.</p><br/>
+				<p>The vanilla values are listed below:
+					<ul>
+						<li>Uneven</li>
+						<li>-1.0 to -0.78</li>
+						<li>-0.78 to -0.375</li>
+						<li>-0.375 to -0.2225</li>
+						<li>-0.2225 to 0.05</li>
+						<li>0.05 to 0.45</li>
+						<li>0.45 to 0.55</li>
+						<li>0.55 to 1.0</li>
+						<li>Flat</li>
+					</ul>
+				</p>
+			`,
+			weirdness: `
+				<p>Weirdness is the fifth parameter which controls the biome's variation which affects biome size.</p><br/>
+				<p>Modded values are between -2.0 and 2.0, however, vanilla values only use -1.2 to 1.0.</p><br/>
+				<p>Negative values make the biome smaller, Positive values make the biomes bigger.</p><br/>
+				<p>The vanilla values are listed below:
+					<ul>
+						<li>Small Biomes</li>
+						<li>-1.0 to 0.0</li>
+						<li>0.0 to 1.0</li>
+						<li>Larger Biomes</li>
+					</ul>
+				</p>
+			`
+		};
+
+		newBiome.innerHTML = `
+			<h2>
+				Biome ${biomeIndex}
+				<button class="toggle-button" onclick="toggleBiome(${biomeIndex})">Toggle</button>
+			</h2>
+			<div class="settings-content">
+				<!-- Biome Name -->
+				<div>
+					<h3 for="biome-name-${biomeIndex}">
+						<a class="info-text" data-info-id="info-biome-name-${biomeIndex}" onclick="toggleHelp('info-biome-name-${biomeIndex}')">i</a> 
+						Biome Name
+					</h3>
+					<input type="text" id="biome-name-${biomeIndex}" class="biome-name" placeholder="Enter biome name">
+					<div id="info-biome-name-${biomeIndex}" class="help-box">
+						${helpTexts["Biome Name"]}
+					</div>
 				</div>
-				${settings.map(setting => `
-					<div class="range-group">
-						<label>${setting.charAt(0).toUpperCase() + setting.slice(1)}</label>
-						<input type="number" class="range-start" placeholder="Min" step="0.0001" min="-2" max="2" data-setting="${setting}">
-						<input type="number" class="range-end" placeholder="Max" step="0.0001" min="-2" max="2" data-setting="${setting}">
+
+				<!-- Biome Settings -->
+				${settings.map((setting, settingIndex) => `
+					<div>
+						<h3 for="setting-${biomeIndex}-${settingIndex}">
+							<a class="info-text" data-info-id="info-setting-${biomeIndex}-${settingIndex}" onclick="toggleHelp('info-setting-${biomeIndex}-${settingIndex}')">i</a> 
+							${setting.charAt(0).toUpperCase() + setting.slice(1)}
+						</h3>
+						<div id="setting-${biomeIndex}-${settingIndex}" class="setting-group">
+							<input type="number" id="range-start-${biomeIndex}-${settingIndex}" class="range-start" placeholder="Min" step="0.0001" min="-2" max="2" data-setting="${setting}">
+							<input type="number" id="range-end-${biomeIndex}-${settingIndex}" class="range-end" placeholder="Max" step="0.0001" min="-2" max="2" data-setting="${setting}">
+						</div>
+						<div id="info-setting-${biomeIndex}-${settingIndex}" class="help-box">
+							${helpTexts[setting]}
+						</div>
 					</div>
 				`).join('')}
-			`;
-			biomeContainer.appendChild(newBiome);
-		}
+			</div>
+		`;
 
-		function removeLastBiome() {
-			const biomeContainer = document.getElementById('biome-settings');
-			const lastBiome = document.querySelector('.settings:last-child');
-			if (lastBiome) {
-				biomeContainer.removeChild(lastBiome);
-				biomeIndex--;
+		biomeContainer.appendChild(newBiome);
+	}
+
+	
+	function toggleBiome(biomeIndex) {
+        const biome = document.querySelector(`.settings[data-biome-index="${biomeIndex}"]`);
+        if (biome) {
+            const content = biome.querySelector('.settings-content');
+            content.style.display = content.style.display === 'none' ? 'block' : 'none';
+        }
+    }
+	
+	function removeLastBiome() {
+        const biomeContainer = document.getElementById('biome-settings');
+        const lastBiome = document.querySelector('.settings:last-child');
+        if (lastBiome) {
+            biomeContainer.removeChild(lastBiome);
+            biomeIndex--;
+        } else {
+            alert("No more biomes to remove!");
+        }
+    }
+	
+	// HELP button
+	function toggleHelp(infoId) {
+		const helpBox = document.getElementById(infoId);
+
+		// Hide all other help boxes
+		document.querySelectorAll('.help-box').forEach(box => {
+			if (box.id !== infoId) {
+				box.style.display = 'none';
 			}
+		});
+
+		// Toggle visibility of the selected help box
+		if (helpBox.style.display === 'block') {
+			helpBox.style.display = 'none';
+		} else {
+			helpBox.style.display = 'block';
 		}
+	}
+	
+	// VISUALIZATION FUNCTIONS
+	function visualizeOverlap() {
+		const barsContainer = document.getElementById('bars-container');
+		barsContainer.innerHTML = ''; // Clear previous bars
 
-		function visualizeOverlap() {
-		    const barsContainer = document.getElementById('bars-container');
-		    barsContainer.innerHTML = '';
-		    const biomes = document.querySelectorAll('.settings');
-		
-		    biomes.forEach((biome, index) => {
-		        const biomeIndex = parseInt(biome.getAttribute('data-biome-index'), 10);
-		        const settingBars = document.createElement('div');
-		        settingBars.innerHTML = `<h3>Biome ${biomeIndex}</h3>`;
-		        barsContainer.appendChild(settingBars);
-		
-		        settings.forEach(setting => {
-		            const rangeStart = parseFloat(biome.querySelector(`.range-start[data-setting="${setting}"]`).value);
-		            const rangeEnd = parseFloat(biome.querySelector(`.range-end[data-setting="${setting}"]`).value);
-		
-		            if (isNaN(rangeStart) || isNaN(rangeEnd)) return;
-		
-		            const barWrapper = document.createElement('div');
-		            barWrapper.className = 'bar-wrapper';
-		            barWrapper.style.position = 'relative';
-		            barWrapper.style.height = '20px';
-		            barWrapper.style.width = '100%';
-		            barWrapper.style.border = '1px solid #ccc';
-		            barWrapper.style.marginBottom = '10px';
-		            barWrapper.style.backgroundColor = '#f3f3f3';
-		            settingBars.appendChild(barWrapper);
-		
-		            const overlay = document.createElement('div');
-		            overlay.className = 'overlay';
-		            overlay.style.position = 'absolute';
-		            overlay.style.height = '100%';
-		            overlay.style.backgroundColor = `rgba(${(index * 50) % 255}, ${(index * 100) % 255}, ${(index * 150) % 255}, 0.5)`;
-		
-		            // Calculate percentage-based width and position
-		            const rangePercentStart = ((rangeStart + 2) / 4) * 100;
-		            const rangePercentWidth = ((rangeEnd - rangeStart) / 4) * 100;
-		
-		            overlay.style.left = `${rangePercentStart}%`;
-		            overlay.style.width = `${rangePercentWidth}%`;
-		
-		            barWrapper.appendChild(overlay);
-		        });
-		    });
-		
-		    // Call function to calculate probabilities for each biome
-		    calculateBiomesProbabilities();
-		}
+		const biomes = document.querySelectorAll('.settings');
 
-		function updateBiomeStyles(biomeIndex) {
-			const biome = document.querySelector(`.settings[data-biome-index="${biomeIndex}"]`);
-			if (biome) {
-				const inputs = biome.querySelectorAll('input');
-				inputs.forEach(input => {
-					input.style.borderColor = '#333';
-					input.style.backgroundColor = '#2E2E2E';
-				});
+		// Define a list of colors for the bars
+		const colors = [
+			[244, 67, 54],   // Red
+			[255, 87, 34],   // Orange
+			[255, 193, 7],   // Yellow
+			[76, 175, 80],   // Green
+			[33, 150, 243],  // Blue
+			[156, 39, 176]   // Purple
+		];
 
-				// Additional styles or classes can be applied here if needed
-			}
-		}
+		biomes.forEach((biome, index) => {
+			const biomeIndex = parseInt(biome.getAttribute('data-biome-index'), 10);
+			const settingBars = document.createElement('div');
+			settingBars.innerHTML = `<h3>Biome ${biomeIndex}</h3>`;
+			barsContainer.appendChild(settingBars);
 
-		function calculateBiomesProbabilities() {
-			const biomes = document.querySelectorAll('.settings');
-			const probabilitiesContainer = document.getElementById('probabilities-container');
-			probabilitiesContainer.innerHTML = '<h2>Biome Generation Probabilities</h2><p>This shows the estimated chance of the biome generating with the other biomes.</p>';
-			const scale = 500 / 4;  // Scale based on the bar width
+			settings.forEach(setting => {
+				// Get range values for this setting
+				const rangeStart = parseFloat(biome.querySelector(`.range-start[data-setting="${setting}"]`).value);
+				const rangeEnd = parseFloat(biome.querySelector(`.range-end[data-setting="${setting}"]`).value);
 
-			biomes.forEach((biome, index) => {
-				const biomeIndex = parseInt(biome.getAttribute('data-biome-index'), 10);
-				let totalRange = 0;
+				// Validate inputs
+				if (isNaN(rangeStart) || isNaN(rangeEnd)) {
+					console.warn(`Invalid range for Biome ${biomeIndex}, Setting: ${setting}`);
+					return;
+				}
 
-				settings.forEach(setting => {
-					const rangeStart = parseFloat(biome.querySelector(`.range-start[data-setting="${setting}"]`).value);
-					const rangeEnd = parseFloat(biome.querySelector(`.range-end[data-setting="${setting}"]`).value);
+				// Create the bar wrapper
+				const barWrapper = document.createElement('div');
+				barWrapper.className = 'bar-wrapper';
 
-					if (!isNaN(rangeStart) && !isNaN(rangeEnd)) {
-						totalRange += (rangeEnd - rangeStart);
-					}
-				});
-
-				const probability = (totalRange / (4 * settings.length)) * 100;
-				const probabilityDiv = document.createElement('div');
-				probabilityDiv.innerHTML = `
-					<h3>Biome ${biomeIndex}: ${probability.toFixed(2)}%</h3>
+				// Apply styles without background color
+				barWrapper.style.cssText = `
+					position: relative;
+					height: 20px;
+					width: 100%;
+					margin-bottom: 10px;
 				`;
-				probabilitiesContainer.appendChild(probabilityDiv);
-			});
-		}
 
-		function exportBiomesToJSON() {
+				settingBars.appendChild(barWrapper);
+
+				// Calculate overlay dimensions
+				const rangePercentStart = Math.max(0, ((rangeStart + 2) / 4) * 100);
+				const rangePercentWidth = Math.max(0, ((rangeEnd - rangeStart) / 4) * 100);
+
+				// Determine color from the list
+				const color = colors[index % colors.length];
+				const [r, g, b] = color;
+
+				// Create the overlay
+				const overlay = document.createElement('div');
+				overlay.className = 'overlay';
+				overlay.style.position = 'absolute';
+				overlay.style.height = '100%';
+				overlay.style.backgroundColor = `rgba(${r}, ${g}, ${b}, 0.6)`;
+
+				// Apply calculated dimensions
+				overlay.style.left = `${rangePercentStart}%`;
+				overlay.style.width = `${rangePercentWidth}%`;
+
+				// Append the overlay to the bar
+				barWrapper.appendChild(overlay);
+			});
+		});
+
+		calculateBiomesProbabilities(); // Update probabilities display
+	}
+
+	function calculateBiomesProbabilities() {
+        const biomes = document.querySelectorAll('.settings');
+        const probabilitiesContainer = document.getElementById('probabilities-container');
+        probabilitiesContainer.innerHTML = '<h1>Biome Generation Probabilities</h1>';
+
+        const totalPossibleRange = Math.sqrt(settings.length);
+        let totalCoverage = 0;
+
+        biomes.forEach(biome => {
+            const biomeIndex = parseInt(biome.getAttribute('data-biome-index'), 10);
+            let squaredSum = 0;
+
+            settings.forEach(setting => {
+                const rangeStart = parseFloat(biome.querySelector(`.range-start[data-setting="${setting}"]`).value);
+                const rangeEnd = parseFloat(biome.querySelector(`.range-end[data-setting="${setting}"]`).value);
+
+                if (!isNaN(rangeStart) && !isNaN(rangeEnd)) {
+                    const normalizedMin = (rangeStart + 2) / 4;
+                    const normalizedMax = (rangeEnd + 2) / 4;
+                    const rangeWidth = normalizedMax - normalizedMin;
+
+                    squaredSum += Math.pow(rangeWidth, 2);
+                }
+            });
+
+            const euclideanRange = Math.sqrt(squaredSum);
+            const percentage = (euclideanRange / totalPossibleRange) * 100;
+            totalCoverage += percentage;
+
+            const probabilityDiv = document.createElement('div');
+            probabilityDiv.innerHTML = `
+                <p>Biome ${biomeIndex}: ${percentage.toFixed(2)}%</p>
+            `;
+            probabilitiesContainer.appendChild(probabilityDiv);
+        });
+
+        const totalDiv = document.createElement('div');
+        totalDiv.innerHTML = `
+            <h3>Total Coverage: ${Math.min(totalCoverage, 100).toFixed(2)}%</h3>
+        `;
+        probabilitiesContainer.appendChild(totalDiv);
+    }
+	
+	// IMPORTING AND EXPORTING BIOMES
+	
+	function exportBiomesToJSON() {
 			const biomes = document.querySelectorAll('.settings');
 			const biomeData = [];
 
@@ -377,51 +587,171 @@
 			a.download = 'biome_data.json';
 			a.click();
 			URL.revokeObjectURL(url);
+	}
+	
+	document.getElementById('file-input').addEventListener('change', function(event) {
+		const file = event.target.files[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.onload = function(e) {
+				const json = JSON.parse(e.target.result);
+				resetBiomes();  // Reset existing biome settings
+				addBiomesFromJSON(json);  // Add new biome settings
+			};
+			reader.readAsText(file);
 		}
+	});
+		
+	function addBiomesFromJSON(json) {
+		const biomeContainer = document.getElementById('biome-settings');
 
-		document.getElementById('file-input').addEventListener('change', function(event) {
-			const file = event.target.files[0];
-			if (file) {
-				const reader = new FileReader();
-				reader.onload = function(e) {
-					const json = JSON.parse(e.target.result);
-					resetBiomes();  // Reset existing biome settings
-					addBiomesFromJSON(json);  // Add new biome settings
-				};
-				reader.readAsText(file);
-			}
-		});
+		// Define help text for each setting
+		const helpTexts = {
+			"Biome Name": `
+				<p>The Biome Name is mainly for biome reference so it's easier to find settings if you export them.</p>
+			`,
+			temperature: `
+				<p>Temperature is one parameter which controls the biome's location.</p><br/>
+				<p>Modded values are between -2.0 and 2.0, however, vanilla values only use -1.0 to 1.0.</p><br/>
+				<p>Lower are like snow biomes, higher values are like deserts.</p><br/>
+				<p>The vanilla values are listed below:
+					<ul>
+						<li>Cold Biomes</li>
+						<li>-1.0 to -0.45</li>
+						<li>-0.45 to -0.15</li>
+						<li>-0.15 to 0.2</li>
+						<li>0.2 to 0.55</li>
+						<li>0.55 to 1.0</li>
+						<li>Hot Biomes</li>
+					</ul>
+				</p>
+			`,
+			humidity: `
+				<p>Humidity is the second parameter which controls the biome's location based on vegetation.</p><br/>
+				<p>Modded values are between -2.0 and 2.0, however, vanilla values only use -1.0 to 1.0.</p><br/>
+				<p>Lower values have less foliage like deserts, higher values have lots of foliage like jungles.</p><br/>
+				<p>The vanilla values are listed below:
+					<ul>
+						<li>Barren Biomes</li>
+						<li>-1.0 to -0.35</li>
+						<li>-0.35 to -0.1</li>
+						<li>-0.1 to 0.1</li>
+						<li>0.1 to 0.3</li>
+						<li>0.3 to 1.0</li>
+						<li>Lush Biomes</li>
+					</ul>
+				</p>
+			`,
+			continentalness: `
+				<p>Continentalness is the third parameter which controls the biome's location based on how far inland or out at sea they are located.</p><br/>
+				<p>Modded values are between -2.0 and 2.0, however, vanilla values only use -1.2 to 1.0.</p><br/>
+				<p>Lower values are out at sea, higher values are far inland.</p><br/>
+				<p>The vanilla values are listed below:
+					<ul>
+						<li>Far Oceans</li>
+						<li>Mushroom fields: -1.2 to -1.05</li>
+						<li>Deep oceans: -1.05 to -0.455</li>
+						<li>Normal ocean: -0.455 to -0.19</li>
+						<li>Coast: -0.19 to -0.11</li>
+						<li>Near-inland: -0.11 to 0.03</li>
+						<li>Mid-inland: 0.03 to 0.3</li>
+						<li>Far-inland: 0.3 to 1.0</li>
+						<li>Far Inland</li>
+					</ul>
+				</p>
+			`,
+			erosion: `
+				<p>Erosion is the fourth parameter which controls the biome's location based on how flat or uneven the terrain is.</p><br/>
+				<p>Modded values are between -2.0 and 2.0, however, vanilla values only use -1.2 to 1.0.</p><br/>
+				<p>Lower values are not flat, higher values are flat.</p><br/>
+				<p>The vanilla values are listed below:
+					<ul>
+						<li>Uneven</li>
+						<li>-1.0 to -0.78</li>
+						<li>-0.78 to -0.375</li>
+						<li>-0.375 to -0.2225</li>
+						<li>-0.2225 to 0.05</li>
+						<li>0.05 to 0.45</li>
+						<li>0.45 to 0.55</li>
+						<li>0.55 to 1.0</li>
+						<li>Flat</li>
+					</ul>
+				</p>
+			`,
+			weirdness: `
+				<p>Weirdness is the fifth parameter which controls the biome's variation which affects biome size.</p><br/>
+				<p>Modded values are between -2.0 and 2.0, however, vanilla values only use -1.2 to 1.0.</p><br/>
+				<p>Negative values make the biome smaller, Positive values make the biomes bigger.</p><br/>
+				<p>The vanilla values are listed below:
+					<ul>
+						<li>Small Biomes</li>
+						<li>-1.0 to 0.0</li>
+						<li>0.0 to 1.0</li>
+						<li>Larger Biomes</li>
+					</ul>
+				</p>
+			`
+		};
 
-		function resetBiomes() {
-			const biomeContainer = document.getElementById('biome-settings');
-			biomeContainer.innerHTML = '';
-			biomeIndex = 0;
-		}
-
-		function addBiomesFromJSON(json) {
-			const biomeContainer = document.getElementById('biome-settings');
-			json.forEach(biome => {
-				biomeIndex++;
-				const newBiome = document.createElement('div');
-				newBiome.className = 'settings';
-				newBiome.setAttribute('data-biome-index', biomeIndex);
-				newBiome.innerHTML = `
-					<h2>Biome ${biomeIndex}</h2>
+		json.forEach(biome => {
+			biomeIndex++;
+			const newBiome = document.createElement('div');
+			newBiome.className = 'settings';
+			newBiome.setAttribute('data-biome-index', biomeIndex);
+			newBiome.innerHTML = `
+				<h2>
+					Biome ${biomeIndex}
+					<button class="toggle-button" onclick="toggleBiome(${biomeIndex})">Toggle</button>
+				</h2>
+				<div class="settings-content">
 					<div class="biome-name-group">
-						<label>Biome Name:</label>
-						<input type="text" class="biome-name" value="${biome.name}" data-setting="name">
+						<h3 for="biome-name-${biomeIndex}">
+							<a class="info-text" data-info-id="info-biome-name-${biomeIndex}" onclick="toggleHelp('info-biome-name-${biomeIndex}')">i</a> 
+							Biome Name
+						</h3>
+						<input type="text" id="biome-name-${biomeIndex}" class="biome-name" value="${biome.name}" data-setting="name">
+						<div id="info-biome-name-${biomeIndex}" class="help-box">
+							${helpTexts["Biome Name"]}
+						</div>
 					</div>
-					${settings.map(setting => `
+					${settings.map((setting, settingIndex) => `
 						<div class="range-group">
-							<label>${setting.charAt(0).toUpperCase() + setting.slice(1)}</label>
+							<h3>
+								<a class="info-text" data-info-id="info-setting-${biomeIndex}-${settingIndex}" onclick="toggleHelp('info-setting-${biomeIndex}-${settingIndex}')">i</a> 
+								${setting.charAt(0).toUpperCase() + setting.slice(1)}
+							</h3>
 							<input type="number" class="range-start" value="${biome[`${setting}Min`]}" step="0.0001" min="-2" max="2" data-setting="${setting}">
 							<input type="number" class="range-end" value="${biome[`${setting}Max`]}" step="0.0001" min="-2" max="2" data-setting="${setting}">
+							<div id="info-setting-${biomeIndex}-${settingIndex}" class="help-box">
+								${helpTexts[setting] || '<p>No help text available for this setting.</p>'}
+							</div>
 						</div>
 					`).join('')}
-				`;
-				biomeContainer.appendChild(newBiome);
+				</div>
+			`;
+			biomeContainer.appendChild(newBiome);
+		});
+	}
+
+		
+	function resetBiomes() {
+		const biomeContainer = document.getElementById('biome-settings');
+		biomeContainer.innerHTML = '';
+		biomeIndex = 0;
+	}
+
+	function updateBiomeStyles(biomeIndex) {
+		const biome = document.querySelector(`.settings[data-biome-index="${biomeIndex}"]`);
+		if (biome) {
+			const inputs = biome.querySelectorAll('input');
+			inputs.forEach(input => {
+				input.style.borderColor = '#333';
+				input.style.backgroundColor = '#2E2E2E';
 			});
+
+			// Additional styles or classes can be applied here if needed
 		}
+	}
 	</script>
 </body>
 </html>
